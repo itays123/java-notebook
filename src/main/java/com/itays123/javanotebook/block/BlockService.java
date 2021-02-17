@@ -8,7 +8,7 @@ import java.util.List;
 public class BlockService {
     public List<Block> getBlocks() {
         return List.of(
-                new Block(1L, "hello world", BlockType.H1, 1L)
+                new Block(1L, "hello world", BlockType.H1)
         );
     }
 }

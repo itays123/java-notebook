@@ -4,22 +4,19 @@ public class Block {
     private Long id;
     private String content;
     private BlockType type;
-    private Long noteId;
 
     public Block() {
     }
 
-    public Block(Long id, String content, BlockType type, Long noteId) {
+    public Block(Long id, String content, BlockType type) {
         this.id = id;
         this.content = content;
         this.type = type;
-        this.noteId = noteId;
     }
 
-    public Block(String content, BlockType type, Long noteId) {
+    public Block(String content, BlockType type) {
         this.content = content;
         this.type = type;
-        this.noteId = noteId;
     }
 
     public Long getId() {
@@ -46,21 +43,12 @@ public class Block {
         this.type = type;
     }
 
-    public Long getNoteId() {
-        return noteId;
-    }
-
-    public void setNoteId(Long noteId) {
-        this.noteId = noteId;
-    }
-
     @Override
     public String toString() {
         return "Block{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", type=" + type +
-                ", noteId=" + noteId +
                 '}';
     }
 }
