@@ -1,8 +1,19 @@
 package com.itays123.javanotebook.block;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="blocks")
 public class Block {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+
+    @Enumerated(EnumType.ORDINAL)
     private BlockType type;
 
     public Block() {
