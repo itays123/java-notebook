@@ -18,8 +18,8 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping
-    public List<Note> getNotes() {
-        return noteService.getNotes();
+    @GetMapping()
+    public List<NoteTitleAndId> getSlimNotes() {
+        return noteService.getSlimNotes();
     }
 }

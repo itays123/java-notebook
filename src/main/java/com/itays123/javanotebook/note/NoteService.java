@@ -15,7 +15,7 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getNotes() {
-        return noteRepository.findAll();
+    public List<NoteTitleAndId> getSlimNotes() {
+        return noteRepository.findIdsAndTitles();
     }
 }
