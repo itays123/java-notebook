@@ -4,6 +4,8 @@ import com.itays123.javanotebook.block.Block;
 import com.itays123.javanotebook.block.BlockType;
 import com.itays123.javanotebook.note.Note;
 import com.itays123.javanotebook.note.NoteRepository;
+import com.itays123.javanotebook.user.User;
+import com.itays123.javanotebook.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,8 +22,11 @@ public class JavaNotebookApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(NoteRepository noteRepository) {
+	CommandLineRunner commandLineRunner(NoteRepository noteRepository, UserRepository userRepository) {
 		return args -> {
+			User user = new User("Me", "email@gmail.com", "password");
+			userRepository.save(user);
+
 			Note note = new Note("My First Note");
 
 			Block block1 = new Block("A Paragraph", BlockType.P);
@@ -29,6 +34,8 @@ public class JavaNotebookApplication {
 
 			note.getContent().add(block1);
 			note.getContent().add(block2);
+
+			note.setUser(user);
 
 			noteRepository.save(note);
 		};

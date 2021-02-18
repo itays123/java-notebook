@@ -1,6 +1,7 @@
 package com.itays123.javanotebook.note;
 
 import com.itays123.javanotebook.block.Block;
+import com.itays123.javanotebook.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,6 +21,10 @@ public class Note {
     @OneToMany(targetEntity = Block.class, cascade = CascadeType.ALL)
     @JoinColumn(name="note_id", referencedColumnName = "id")
     private List<Block> content = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", updatable = false)
+    private User user;
 
     public Note() {
     }
@@ -55,5 +60,13 @@ public class Note {
 
     public void setContent(List<Block> content) {
         this.content = content;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
