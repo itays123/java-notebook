@@ -18,4 +18,6 @@ public class NoteService {
     public List<NoteTitleAndId> getSlimNotes() {
         return noteRepository.findIdsAndTitles();
     }
+
+    public Note getNoteById(Long id) { return noteRepository.getOne(id); }
 }

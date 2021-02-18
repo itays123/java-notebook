@@ -1,9 +1,7 @@
 package com.itays123.javanotebook.note;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +16,13 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping()
+    @GetMapping
     public List<NoteTitleAndId> getSlimNotes() {
         return noteService.getSlimNotes();
+    }
+
+    @GetMapping(path = "/{id}")
+    public Note getNoteById(@PathVariable("id") String id) {
+        return noteService.getNoteById(Long.parseLong(id));
     }
 }
