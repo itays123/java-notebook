@@ -17,8 +17,8 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<NoteTitleAndId> getSlimNotes() {
-        return noteService.getSlimNotes();
+    public List<NoteTitleAndId> getUserNotes() {
+        return noteService.getUserNotes(1L);
     }
 
     @GetMapping(path = "/{id}")
