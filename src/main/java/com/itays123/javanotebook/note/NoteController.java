@@ -25,4 +25,9 @@ public class NoteController {
     public Note getNoteById(@PathVariable("id") Long id) {
         return noteService.getNoteById(id);
     }
+
+    @PostMapping
+    public Note insertNote(@RequestBody Note note) {
+        return noteService.insertNote(note);
+    }
 }

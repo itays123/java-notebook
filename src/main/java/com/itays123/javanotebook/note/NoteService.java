@@ -23,4 +23,11 @@ public class NoteService {
         return noteRepository.findById(id)
                 .orElseThrow(() -> {throw new NoteNotFoundException();});
     }
+
+    public Note insertNote(Note note) {
+        if (note.getTitle() == null || note.getTitle().isBlank()) {
+            note.setTitle("Untitled Note");
+        }
+        return noteRepository.save(note);
+    }
 }
