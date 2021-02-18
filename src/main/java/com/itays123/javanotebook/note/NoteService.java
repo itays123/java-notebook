@@ -31,6 +31,16 @@ public class NoteService {
         return noteRepository.save(note);
     }
 
+    public Note updateNote(Long id, Note newNote) {
+        return noteRepository.findById(id)
+                .map(note -> {
+                    note.setTitle(newNote.getTitle());
+                    note.setContent(newNote.getContent());
+                    return noteRepository.save(note);
+                })
+                .orElseThrow(() -> {throw new NoteNotFoundException(); });
+    }
+
     public void deleteNote(Long id) {
         noteRepository.deleteById(id);
     }
