@@ -19,5 +19,8 @@ public class NoteService {
         return noteRepository.findIdsAndTitles();
     }
 
-    public Note getNoteById(Long id) { return noteRepository.getOne(id); }
+    public Note getNoteById(Long id) {
+        return noteRepository.findById(id)
+                .orElseThrow(() -> {throw new NoteNotFoundException();});
+    }
 }

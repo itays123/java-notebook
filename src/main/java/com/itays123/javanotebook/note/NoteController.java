@@ -22,7 +22,7 @@ public class NoteController {
     }
 
     @GetMapping(path = "/{id}")
-    public Note getNoteById(@PathVariable("id") String id) {
-        return noteService.getNoteById(Long.parseLong(id));
+    public Note getNoteById(@PathVariable("id") Long id) {
+        return noteService.getNoteById(id);
     }
 }
