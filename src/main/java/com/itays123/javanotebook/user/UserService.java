@@ -1,5 +1,6 @@
 package com.itays123.javanotebook.user;
 
+import com.itays123.javanotebook.auth.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,9 +14,12 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final JWTUtils jwtUtils;
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JWTUtils jwtUtils) {
         this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     public String login(String email, String password) {
@@ -23,12 +27,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> {
                     throw new EmailNotFoundException("Could not find user with email " + email);
                 });
-        return user.getName();
+        return jwtUtils.generateToken(user);
     }
 
     public String register(String name, String email, String password) {
         if(userRepository.findByEmail(email).isPresent()) throw new EmailInUseException("Email " + email + " is already in use");
-        return name;
+        User user = userRepository.save(new User(name, email, password));
+        return jwtUtils.generateToken(user);
     }
 
     public User getProfile(String token) {
