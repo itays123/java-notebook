@@ -3,6 +3,7 @@ package com.itays123.javanotebook.note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -17,8 +18,9 @@ public class NoteController {
     }
 
     @GetMapping(path = "/{id}")
-    public Note getNoteById(@PathVariable("id") Long id) {
-        return noteService.getNoteById(id);
+    public Note getNoteById(HttpServletRequest request, @PathVariable("id") Long id) {
+        String subject = request.getUserPrincipal().getName();
+        return noteService.getNoteById(id, subject);
     }
 
     @PostMapping

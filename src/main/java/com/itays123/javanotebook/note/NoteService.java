@@ -1,22 +1,34 @@
 package com.itays123.javanotebook.note;
 
+import com.itays123.javanotebook.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class NoteService {
 
     private final NoteRepository noteRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public NoteService(NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
     }
 
-    public Note getNoteById(Long id) {
+    private boolean isNoteMatchesSubject(Note note, String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    if(note.getUser() == null) return false;
+                    else return note.getUser().getId().equals(user.getId());
+                })
+                .orElse(false);
+    }
+
+    public Note getNoteById(Long id, String subject) {
         return noteRepository.findById(id)
+                .filter(note -> isNoteMatchesSubject(note, subject))
                 .orElseThrow(() -> {throw new NoteNotFoundException();});
     }
 
