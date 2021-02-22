@@ -15,14 +15,6 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public List<NoteTitleAndId> getSlimNotes() {
-        return noteRepository.findIdsAndTitles();
-    }
-
-    public List<NoteTitleAndId> getUserNotes(Long userId) {
-        return noteRepository.findUserNotes(userId);
-    }
-
     public Note getNoteById(Long id) {
         return noteRepository.findById(id)
                 .orElseThrow(() -> {throw new NoteNotFoundException();});

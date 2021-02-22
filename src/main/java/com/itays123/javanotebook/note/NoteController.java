@@ -16,11 +16,6 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping
-    public List<NoteTitleAndId> getUserNotes() {
-        return noteService.getUserNotes(1L);
-    }
-
     @GetMapping(path = "/{id}")
     public Note getNoteById(@PathVariable("id") Long id) {
         return noteService.getNoteById(id);
