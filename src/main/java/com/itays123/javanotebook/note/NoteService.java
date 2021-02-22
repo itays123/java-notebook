@@ -43,8 +43,9 @@ public class NoteService {
         return noteRepository.save(note);
     }
 
-    public Note updateNote(Long id, Note newNote) {
+    public Note updateNote(Long id, Note newNote, String subject) {
         return noteRepository.findById(id)
+                .filter(note -> isNoteMatchesSubject(note, subject))
                 .map(note -> {
                     note.setTitle(newNote.getTitle());
                     note.setContent(newNote.getContent());
