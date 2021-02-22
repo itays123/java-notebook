@@ -1,5 +1,7 @@
 package com.itays123.javanotebook.note;
 
+import com.itays123.javanotebook.user.EmailNotFoundException;
+import com.itays123.javanotebook.user.User;
 import com.itays123.javanotebook.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,12 @@ public class NoteService {
                 .orElseThrow(() -> {throw new NoteNotFoundException();});
     }
 
-    public Note insertNote(Note note) {
+    public Note insertNote(Note note, String subject) {
         if (note.getTitle() == null || note.getTitle().isBlank()) {
             note.setTitle("Untitled Note");
         }
+        User user = userRepository.findByEmail(subject).orElseThrow(EmailNotFoundException::new);
+        note.setUser(user);
         return noteRepository.save(note);
     }
 

@@ -24,8 +24,9 @@ public class NoteController {
     }
 
     @PostMapping
-    public Note insertNote(@RequestBody Note note) {
-        return noteService.insertNote(note);
+    public Note insertNote(HttpServletRequest request, @RequestBody Note note) {
+        String subject = request.getUserPrincipal().getName();
+        return noteService.insertNote(note, subject);
     }
 
     @PutMapping(path = "/{id}")
