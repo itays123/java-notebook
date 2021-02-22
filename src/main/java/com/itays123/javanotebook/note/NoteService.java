@@ -54,7 +54,13 @@ public class NoteService {
                 .orElseThrow(() -> {throw new NoteNotFoundException(); });
     }
 
-    public void deleteNote(Long id) {
-        noteRepository.deleteById(id);
+    public void deleteNote(Long id, String subject) {
+        noteRepository.findById(id)
+                .filter(note -> isNoteMatchesSubject(note, subject))
+                .map(note -> {
+                    noteRepository.deleteById(id);
+                    return 0;
+                });
+
     }
 }

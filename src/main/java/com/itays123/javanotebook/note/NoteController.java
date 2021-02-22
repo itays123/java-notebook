@@ -36,7 +36,8 @@ public class NoteController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deleteNote(@PathVariable("id") Long id) {
-        noteService.deleteNote(id);
+    public void deleteNote(HttpServletRequest request, @PathVariable("id") Long id) {
+        String subject = request.getUserPrincipal().getName();
+        noteService.deleteNote(id, subject);
     }
 }
