@@ -1,12 +1,12 @@
 package com.itays123.javanotebook.auth;
 
 import com.itays123.javanotebook.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +25,9 @@ import java.util.Arrays;
 @Component
 public class JWTFilter extends BasicAuthenticationFilter {
 
+    static final Logger log =
+            LoggerFactory.getLogger(JWTFilter.class);
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -40,8 +43,10 @@ public class JWTFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info("starting filter");
         try {
             UsernamePasswordAuthenticationToken authenticationToken = getValidToken(request);
+            log.info("successfully authenticated user");
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             chain.doFilter(request, response);
         } catch (AuthenticationException exception) {
@@ -50,6 +55,7 @@ public class JWTFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getValidToken(HttpServletRequest request) throws AuthenticationException {
+        log.info("Authentication token initialization started");
         if(request.getCookies() == null) {
             throw new AuthenticationException("No cookies") {
                 @Override
@@ -58,6 +64,7 @@ public class JWTFilter extends BasicAuthenticationFilter {
                 }
             };
         }
+        log.info("Found cookies in request object");
         Cookie tokenCookie = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("token"))
                 .findFirst()
@@ -69,11 +76,13 @@ public class JWTFilter extends BasicAuthenticationFilter {
                         }
                     };
                 });
+        log.info("Found cookie named token");
         String token = tokenCookie.getValue();
         String email = jwtUtils.getUsernameFromToken(token);
+        log.info("email decoded, retrieved {}", email);
         UserDetails user = userService.loadUserByUsername(email);
 
-        logger.debug(user);
+        log.info(user.toString());
 
         if (jwtUtils.validateToken(token, user)) {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken

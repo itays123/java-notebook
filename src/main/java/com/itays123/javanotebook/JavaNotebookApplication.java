@@ -6,6 +6,8 @@ import com.itays123.javanotebook.note.Note;
 import com.itays123.javanotebook.note.NoteRepository;
 import com.itays123.javanotebook.user.User;
 import com.itays123.javanotebook.user.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +19,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories
 public class JavaNotebookApplication {
 
+	static final Logger log =
+			LoggerFactory.getLogger(JavaNotebookApplication.class);
+
 	public static void main(String[] args) {
+		log.info("Using loggers");
 		SpringApplication.run(JavaNotebookApplication.class, args);
 	}
 

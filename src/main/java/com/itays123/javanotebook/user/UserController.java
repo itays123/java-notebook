@@ -27,6 +27,7 @@ public class UserController {
         String token = userService.login(user.getEmail(), user.getPassword());
         Cookie tokenCookie = new Cookie("token", token);
         tokenCookie.setHttpOnly(true);
+        tokenCookie.setPath("/");
         response.addCookie(tokenCookie);
         return token;
     }
@@ -36,6 +37,7 @@ public class UserController {
         String token = userService.register(user.getName(), user.getEmail(), user.getPassword());
         Cookie tokenCookie = new Cookie("token", token);
         tokenCookie.setHttpOnly(true);
+        tokenCookie.setPath("/");
         response.addCookie(tokenCookie);
         return token;
     }
