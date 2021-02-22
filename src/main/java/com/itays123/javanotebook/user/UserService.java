@@ -1,6 +1,8 @@
 package com.itays123.javanotebook.user;
 
 import com.itays123.javanotebook.auth.JWTUtils;
+import com.itays123.javanotebook.note.NoteRepository;
+import com.itays123.javanotebook.note.NoteTitleAndId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,11 +17,14 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final NoteRepository noteRepository;
+
     private final JWTUtils jwtUtils;
 
     @Autowired
-    public UserService(UserRepository userRepository, JWTUtils jwtUtils) {
+    public UserService(UserRepository userRepository, NoteRepository noteRepository, JWTUtils jwtUtils) {
         this.userRepository = userRepository;
+        this.noteRepository = noteRepository;
         this.jwtUtils = jwtUtils;
     }
 
@@ -38,8 +42,12 @@ public class UserService implements UserDetailsService {
         return jwtUtils.generateToken(user);
     }
 
-    public User getProfile(String token) {
-        return userRepository.findById(1L).orElseThrow();
+    public UserProfile getProfile(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> {
+                    List<NoteTitleAndId> notes = noteRepository.findUserNotes(user.getId());
+                    return UserProfile.fromUserAndNotes(user, notes);
+                }).orElseThrow(() -> {throw new EmailNotFoundException("Could not find user with email " + email);});
     }
 
     @Override

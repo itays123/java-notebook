@@ -1,14 +1,22 @@
 package com.itays123.javanotebook.user;
 
+import com.itays123.javanotebook.JavaNotebookApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(path = "api/auth")
 public class UserController {
+
+    static final Logger log =
+            LoggerFactory.getLogger(JavaNotebookApplication.class);
 
     private final UserService userService;
 
@@ -18,8 +26,9 @@ public class UserController {
     }
 
     @GetMapping
-    public User getProfile() {
-        return userService.getProfile("");
+    public UserProfile getProfile(HttpServletRequest request) {
+        log.info("Handling profile request with {}", request.getUserPrincipal().getName());
+        return userService.getProfile(request.getUserPrincipal().getName());
     }
 
     @PostMapping(path = "/login")
