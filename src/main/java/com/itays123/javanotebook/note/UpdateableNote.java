@@ -2,7 +2,6 @@ package com.itays123.javanotebook.note;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itays123.javanotebook.block.Block;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -12,21 +11,21 @@ public class UpdateableNote {
 
     private List<Block> addedBlocks;
     private List<Block> updatedBlocks;
-    private List<Long> deletedBlock;
+    private List<Long> deletedBlocks;
 
     public UpdateableNote() {
     }
 
     public UpdateableNote(
             String title,
-            @JsonProperty(defaultValue = "[]") List<Block> addedBlocks,
-            @JsonProperty(defaultValue = "[]") List<Block> updatedBlocks,
-            @JsonProperty(defaultValue = "[]") List<Long> deletedBlock
+            List<Block> addedBlocks,
+            List<Block> updatedBlocks,
+            List<Long> deletedBlocks
     ) {
         this.title = title;
         this.addedBlocks = addedBlocks;
         this.updatedBlocks = updatedBlocks;
-        this.deletedBlock = deletedBlock;
+        this.deletedBlocks = deletedBlocks;
     }
 
     public String getTitle() {
@@ -53,11 +52,11 @@ public class UpdateableNote {
         this.updatedBlocks = updatedBlocks;
     }
 
-    public List<Long> getDeletedBlock() {
-        return deletedBlock;
+    public List<Long> getDeletedBlocks() {
+        return deletedBlocks;
     }
 
-    public void setDeletedBlock(List<Long> deletedBlock) {
-        this.deletedBlock = deletedBlock;
+    public void setDeletedBlocks(List<Long> deletedBlocks) {
+        this.deletedBlocks = deletedBlocks;
     }
 }
