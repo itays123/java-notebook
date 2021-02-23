@@ -18,19 +18,19 @@ public class NoteController {
     }
 
     @GetMapping(path = "/{id}")
-    public Note getNoteById(HttpServletRequest request, @PathVariable("id") Long id) {
+    public SecureNote getNoteById(HttpServletRequest request, @PathVariable("id") Long id) {
         String subject = request.getUserPrincipal().getName();
         return noteService.getNoteById(id, subject);
     }
 
     @PostMapping
-    public Note insertNote(HttpServletRequest request, @RequestBody Note note) {
+    public SecureNote insertNote(HttpServletRequest request, @RequestBody Note note) {
         String subject = request.getUserPrincipal().getName();
         return noteService.insertNote(note, subject);
     }
 
     @PutMapping(path = "/{id}")
-    public Note updateNote(HttpServletRequest request, @PathVariable("id") Long id, @RequestBody Note note) {
+    public SecureNote updateNote(HttpServletRequest request, @PathVariable("id") Long id, @RequestBody Note note) {
         String subject = request.getUserPrincipal().getName();
         return noteService.updateNote(id, note, subject);
     }

@@ -28,23 +28,24 @@ public class NoteService {
                 .orElse(false);
     }
 
-    public Note getNoteById(Long id, String subject) {
-        return noteRepository.findById(id)
+    public SecureNote getNoteById(Long id, String subject) {
+        Note foundNote = noteRepository.findById(id)
                 .filter(note -> isNoteMatchesSubject(note, subject))
                 .orElseThrow(() -> {throw new NoteNotFoundException();});
+        return SecureNote.fromNote(foundNote);
     }
 
-    public Note insertNote(Note note, String subject) {
+    public SecureNote insertNote(Note note, String subject) {
         if (note.getTitle() == null || note.getTitle().isBlank()) {
             note.setTitle("Untitled Note");
         }
         User user = userRepository.findByEmail(subject).orElseThrow(EmailNotFoundException::new);
         note.setUser(user);
-        return noteRepository.save(note);
+        return SecureNote.fromNote(noteRepository.save(note));
     }
 
-    public Note updateNote(Long id, Note newNote, String subject) {
-        return noteRepository.findById(id)
+    public SecureNote updateNote(Long id, Note newNote, String subject) {
+        Note updatedNote = noteRepository.findById(id)
                 .filter(note -> isNoteMatchesSubject(note, subject))
                 .map(note -> {
                     note.setTitle(newNote.getTitle());
@@ -52,6 +53,7 @@ public class NoteService {
                     return noteRepository.save(note);
                 })
                 .orElseThrow(() -> {throw new NoteNotFoundException(); });
+        return SecureNote.fromNote(updatedNote);
     }
 
     public void deleteNote(Long id, String subject) {
