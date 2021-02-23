@@ -3,7 +3,9 @@ package com.itays123.javanotebook.note;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itays123.javanotebook.block.Block;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpdateableNote {
 
@@ -58,5 +60,33 @@ public class UpdateableNote {
 
     public void setDeletedBlocks(List<Long> deletedBlocks) {
         this.deletedBlocks = deletedBlocks;
+    }
+
+    public void ensureValid() {
+        if (title == null) title = "";
+        if (addedBlocks == null) addedBlocks = new ArrayList<>();
+        if (updatedBlocks == null) updatedBlocks = new ArrayList<>();
+        if (deletedBlocks == null) deletedBlocks = new ArrayList<>();
+    }
+
+    public static Note applyChanges(Note note, UpdateableNote updateableNote) {
+        updateableNote.ensureValid();
+        if (!updateableNote.getTitle().isBlank()) note.setTitle(updateableNote.getTitle());
+        List<Block> content = note.getContent()
+                .stream()
+                .filter(block -> updateableNote.getDeletedBlocks().stream().noneMatch(deletedBlockId -> deletedBlockId.equals(block.getId())))
+                .collect(Collectors.toList());
+        content.forEach(block -> {
+            updateableNote.getUpdatedBlocks()
+                .stream()
+                .filter(updatedBlock -> updatedBlock.getId().equals(block.getId()))
+                .forEach(updatedBlock -> {
+                    block.setType(updatedBlock.getType());
+                    block.setContent(updatedBlock.getContent());
+            });
+        });
+        content.addAll(updateableNote.getAddedBlocks());
+        note.setContent(content);
+        return note;
     }
 }

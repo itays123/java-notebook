@@ -44,14 +44,11 @@ public class NoteService {
         return SecureNote.fromNote(noteRepository.save(note));
     }
 
-    public SecureNote updateNote(Long id, Note newNote, String subject) {
+    public SecureNote updateNote(Long id, UpdateableNote updateableNote, String subject) {
         Note updatedNote = noteRepository.findById(id)
                 .filter(note -> isNoteMatchesSubject(note, subject))
-                .map(note -> {
-                    note.setTitle(newNote.getTitle());
-                    note.setContent(newNote.getContent());
-                    return noteRepository.save(note);
-                })
+                .map(note -> noteRepository.save(UpdateableNote.applyChanges(note, updateableNote))
+                )
                 .orElseThrow(() -> {throw new NoteNotFoundException(); });
         return SecureNote.fromNote(updatedNote);
     }

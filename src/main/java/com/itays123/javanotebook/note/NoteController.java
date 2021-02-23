@@ -30,9 +30,9 @@ public class NoteController {
     }
 
     @PutMapping(path = "/{id}")
-    public SecureNote updateNote(HttpServletRequest request, @PathVariable("id") Long id, @RequestBody Note note) {
+    public SecureNote updateNote(HttpServletRequest request, @PathVariable("id") Long id, @RequestBody UpdateableNote updateableNote) {
         String subject = request.getUserPrincipal().getName();
-        return noteService.updateNote(id, note, subject);
+        return noteService.updateNote(id, updateableNote, subject);
     }
 
     @DeleteMapping(path = "/{id}")
