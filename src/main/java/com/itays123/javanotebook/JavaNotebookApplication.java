@@ -14,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaRepositories
@@ -28,9 +29,9 @@ public class JavaNotebookApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(NoteRepository noteRepository, UserRepository userRepository) {
+	CommandLineRunner commandLineRunner(NoteRepository noteRepository, UserRepository userRepository, PasswordEncoder encoder) {
 		return args -> {
-			User user = new User("Me", "email@gmail.com", "password");
+			User user = new User("Me", "email@gmail.com", encoder.encode("password"));
 			userRepository.save(user);
 
 			Note note = new Note("My First Note");

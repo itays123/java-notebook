@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +22,14 @@ public class UserService implements UserDetailsService {
 
     private final JWTUtils jwtUtils;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserRepository userRepository, NoteRepository noteRepository, JWTUtils jwtUtils) {
+    public UserService(UserRepository userRepository, NoteRepository noteRepository, JWTUtils jwtUtils, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.noteRepository = noteRepository;
         this.jwtUtils = jwtUtils;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String login(String email, String password) {
@@ -33,12 +37,15 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> {
                     throw new EmailNotFoundException("Could not find user with email " + email);
                 });
-        return jwtUtils.generateToken(user);
+        if(passwordEncoder.matches(password, user.getPassword()))
+            return jwtUtils.generateToken(user);
+        else throw new PasswordIncorrectException("Passwords Don't match");
     }
 
     public String register(String name, String email, String password) {
         if(userRepository.findByEmail(email).isPresent()) throw new EmailInUseException("Email " + email + " is already in use");
-        User user = userRepository.save(new User(name, email, password));
+        String hashedPassword = passwordEncoder.encode(password);
+        User user = userRepository.save(new User(name, email, hashedPassword));
         return jwtUtils.generateToken(user);
     }
 
