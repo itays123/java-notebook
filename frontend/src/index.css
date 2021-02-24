@@ -15,3 +15,21 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .scrollable {
+    @apply absolute top-0 bottom-0 left-0 right-0 h-full w-full overflow-y-scroll
+  }
+  .block-H1 {
+    @apply text-3xl mt-6
+  }
+  .block-H2 {
+    @apply text-2xl mt-4
+  }
+  .block-H3 {
+    @apply text-xl mt-4
+  }
+  .block-P {
+    @apply mt-2
+  }
+}
