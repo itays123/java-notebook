@@ -32,4 +32,7 @@ code {
   .block-P {
     @apply mt-2
   }
+  .dark-button {
+    @apply bg-cream text-gray-800 py-2 focus:outline-none hover:bg-cream-lightish disabled:opacity-70
+  }
 }
