@@ -5,9 +5,10 @@ module.exports = {
     extend: {
       colors: {
         'cream-light': '#fffffb',
+        'cream-lightish': '#F3E8E4',
         'cream': '#d7ccc8',
         'cream-dark': '#a69b97',
-        'cream-darker': '#776d69'
+        'cream-darker': '#776d69',
       }
     },
   },
