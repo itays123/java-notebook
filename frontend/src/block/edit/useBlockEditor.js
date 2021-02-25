@@ -10,6 +10,7 @@ function asMap(blocks = []) {
 
 export function useBlockEditor(initialBlocks = []) {
   const [blocks, setBlocks] = useState(asMap(initialBlocks));
+  const [modified, setModified] = useState(new Map());
 
   const updateMap = (k,v) => {
     setBlocks(map => new Map(map.set(k,v)));
@@ -29,15 +30,12 @@ export function useBlockEditor(initialBlocks = []) {
       updateMap(index, newBlock);
     },
     modifyBlockContent(index, content) {
-      // if existed
-      /*
       let modifiedBlock = blocks.get(index);
       if (modifiedBlock.id) {
-          setModifiedMap(map => {
+          setModified(map => {
               return new Map(map.set(modifiedBlock.id, { ...modifiedBlock, content }));
           })
       }
-      */
     },
     modifyBlockType(index, type) {
         // if existed
