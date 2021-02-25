@@ -21,7 +21,8 @@ const AuthContextProvider = ({ children }) => {
                 { title: 'A Secret Note', id: 7 },
             ]
         },
-        refresh() {}
+        refresh() {},
+        logout() {}
     }
     return ( 
         <AuthContext.Provider value={dummyData}>{children}</AuthContext.Provider>

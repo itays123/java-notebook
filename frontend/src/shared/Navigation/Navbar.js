@@ -1,3 +1,6 @@
+import SignedInLinks from "./SignedInLinks"
+import SignedOutLinks from "./SignedOutLinks"
+
 const Navbar = () => {
     return ( 
         <nav className="w-full h-full bg-cream">
@@ -5,7 +8,10 @@ const Navbar = () => {
                 <div className="flex-grow logo text-2xl font-bold text-gray-800">
                     Java Notebook
                 </div>
-                <div className="links"></div>
+                <div className="links h-full flex items-stretch">
+                    <SignedInLinks />
+                    <SignedOutLinks />
+                </div>
             </div>
         </nav>
      );
