@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-const BlockEdit = ({ type: initialType, content: initialContent, onContentChange, onKeyEnter }) => {
+const BlockEdit = ({ type: initialType, content: initialContent, onContentChange, onKeyEnter, onBlur }) => {
     const [content, setContent] = useState(initialContent || '');
     const [type, setType] = useState(initialType || 'P');
     const ref = useRef();
 
     useEffect(() => {
         ref.current.focus();
-    }, []);    
-
+    }, []);
+    
     return ( 
         <div>
             <input 
@@ -18,9 +18,12 @@ const BlockEdit = ({ type: initialType, content: initialContent, onContentChange
                 value={content} 
                 onChange={e => {
                     setContent(e.target.value);
-                    onContentChange(e.target.value)
+                    onContentChange(e.target.value);
                 }}
                 onKeyPress={e => e.key === 'Enter' && onKeyEnter()} 
+                onBlur={() => {
+                    onBlur(content, type);
+                }}
                 />
         </div>
      );
