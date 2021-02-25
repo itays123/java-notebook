@@ -21,7 +21,7 @@ code {
     @apply absolute top-0 bottom-0 left-0 right-0 h-full w-full overflow-y-scroll
   }
   .block-H1 {
-    @apply text-3xl mt-6
+    @apply text-3xl mt-6 leading-snug
   }
   .block-H2 {
     @apply text-2xl mt-4

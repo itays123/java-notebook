@@ -1,6 +1,6 @@
-const Block = ({ type, content }) => {
+const Block = ({ type, content, onBlockClick = () => {} }) => {
     return ( 
-        <div className={`block-${type}`}>{ content }</div>
+        <div className={`block-${type}`} onClick={() => onBlockClick()}>{ content }</div>
      );
 }
  

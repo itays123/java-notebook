@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
-import BlockList from "../../block/view/BlockList";
+import BlockList from "../../block/BlockList";
+import NoteEditorContextProvider from "../edit/NoteEditorContext";
 import { useNote } from "../useNote";
 
 const NoteView = () => {
     const { id } = useParams();
     const note = useNote(id);
+
     return ( 
+      <NoteEditorContextProvider>
         <div className="note scrollable">
             <div className="container mx-auto">
               <header className="pt-8 pb-2">
@@ -17,6 +20,7 @@ const NoteView = () => {
               </main>
             </div>
         </div>
+        </NoteEditorContextProvider>
      );
 }
  
