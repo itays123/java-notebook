@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const BlockEdit = ({ type: initialType, content: initialContent, onContentChange }) => {
+const BlockEdit = ({ type: initialType, content: initialContent, onContentChange, onKeyEnter }) => {
     const [content, setContent] = useState(initialContent || '');
     const [type, setType] = useState(initialType || 'P');
     const ref = useRef();
@@ -19,7 +19,9 @@ const BlockEdit = ({ type: initialType, content: initialContent, onContentChange
                 onChange={e => {
                     setContent(e.target.value);
                     onContentChange(e.target.value)
-                }} />
+                }}
+                onKeyPress={e => e.key === 'Enter' && onKeyEnter()} 
+                />
         </div>
      );
 }

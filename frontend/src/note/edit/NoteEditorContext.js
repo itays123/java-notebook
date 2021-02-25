@@ -11,7 +11,10 @@ const NoteEditorContextProvider = ( {children} ) => {
     return ( 
         <NoteEditorContext.Provider value={{
             focusedBlockIndex,
-            setFocusedBlockIndex
+            setFocusedBlockIndex,
+            next() {
+                setFocusedBlockIndex(i=>++i);
+            }
         }}>
             {children}
         </NoteEditorContext.Provider>

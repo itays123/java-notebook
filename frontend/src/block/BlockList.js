@@ -5,8 +5,8 @@ import { useBlockEditor } from "./edit/useBlockEditor";
 import Block from "./view/Block";
 
 const BlockList = ({ blocks }) => {
-    const {focusedBlockIndex, setFocusedBlockIndex} = useNoteEditorContext();
-    const { modifyBlockContent, changes } = useBlockEditor(blocks);
+    const {focusedBlockIndex, setFocusedBlockIndex, next} = useNoteEditorContext();
+    const { modifyBlockContent, changes, addBlock, added } = useBlockEditor(blocks);
 
     return (
         <>
@@ -16,13 +16,44 @@ const BlockList = ({ blocks }) => {
                     <BlockEdit {...block} 
                         onContentChange={content => {
                             modifyBlockContent(index, content);
-                            console.log(changes().updatedBlocks);
-                        }} />
+                        }} 
+                        onKeyEnter={() => {
+                            if (index + 1 === blocks.length + added.length) {
+                                addBlock();
+                            }
+                            next();
+                        }}
+                        />
                 ) : (
                     <Block {...block} onBlockClick={() => setFocusedBlockIndex(index)}/>
                 )}
             </Fragment>
         ))}
+        {added.map((block, index) => {
+            const actualIndex = blocks.length + index;
+            if (focusedBlockIndex === actualIndex) {
+                return (
+                    <Fragment key={index}>
+                    <BlockEdit {...block} 
+                        onContentChange={content => {
+                            modifyBlockContent(actualIndex, content);
+                            console.log(changes().updatedBlocks);
+                        }} 
+                        onKeyEnter={() => {
+                            if (actualIndex + 1 === blocks.length + added.length) {
+                                addBlock();
+                            }
+                            next();
+                        }}
+                        />
+                    </Fragment>
+                )
+            }
+            return (
+            <Fragment key={index}>
+                <Block {...block} onBlockClick={() => setFocusedBlockIndex(index)}/>
+            </Fragment>
+        )})}
         </>
     );
 }
