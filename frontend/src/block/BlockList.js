@@ -10,11 +10,11 @@ const BlockList = ({ blocks: initialBlocks }) => {
 
     return (
         <>
-        {[...blocks.keys()].map((index) => { 
+        {[...blocks.keys()].map((index, indexInNote) => { 
             const block = blocks.get(index);
             return (
             <Fragment key={`${index}:${block.id}`}>
-                {focusedBlockIndex === index ? (
+                {focusedBlockIndex === indexInNote ? (
                     <BlockEdit {...block} 
                         onContentChange={content => {
                             modifyBlockContent(index, content);
