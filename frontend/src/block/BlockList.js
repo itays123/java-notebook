@@ -10,7 +10,9 @@ const BlockList = ({ blocks: initialBlocks }) => {
 
     return (
         <>
-        {[...blocks.values()].map((block, index) => (
+        {[...blocks.keys()].map((index) => { 
+            const block = blocks.get(index);
+            return (
             <Fragment key={`${index}:${block.id}`}>
                 {focusedBlockIndex === index ? (
                     <BlockEdit {...block} 
@@ -36,7 +38,7 @@ const BlockList = ({ blocks: initialBlocks }) => {
                     <Block {...block} onBlockClick={() => setFocusedBlockIndex(index)}/>
                 )}
             </Fragment>
-        ))}
+        )})}
         </>
     );
 }
