@@ -17,6 +17,9 @@ const NoteEditorContextProvider = ( {children, initialTitle = '', initialBlocks 
             focusedBlockIndex,
             setFocusedBlockIndex,
             next() {
+                if (focusedBlockIndex + 1 === blockEditor.blocks.size) {
+                    blockEditor.addBlock();
+                }
                 setFocusedBlockIndex(i=>++i);
             },
             prev() {
