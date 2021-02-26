@@ -21,6 +21,7 @@ export function useBlockEditor(initialBlocks = []) {
   return {
     blocks,
     saveBlock(index, updatedContent, updatedType) {
+      console.log('saving', index);
       const block = blocks.get(index);
       if (block) updateMap(index, { ...block, content: updatedContent, type: updatedType });
     },
@@ -41,6 +42,18 @@ export function useBlockEditor(initialBlocks = []) {
       } else if (added.has(index)) {
         setAdded(map => {
             return new Map(map.set(index, { ...modifiedBlock, content }));
+        })
+      }
+    },
+    modifyBlockType(index, type) {
+      let modifiedBlock = blocks.get(index);
+      if (modifiedBlock.id) {
+          setModified(map => {
+              return new Map(map.set(modifiedBlock.id, { ...modifiedBlock, type }));
+          })
+      } else if (added.has(index)) {
+        setAdded(map => {
+            return new Map(map.set(index, { ...modifiedBlock, type }));
         })
       }
     },

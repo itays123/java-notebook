@@ -6,7 +6,7 @@ import Block from "./view/Block";
 
 const BlockList = ({ blocks: initialBlocks }) => {
     const {focusedBlockIndex, setFocusedBlockIndex, next, prev} = useNoteEditorContext();
-    const { blocks, modifyBlockContent, addBlock, saveBlock, deleteBlock } = useBlockEditor(initialBlocks);
+    const { blocks, modifyBlockContent, modifyBlockType, addBlock, saveBlock, deleteBlock } = useBlockEditor(initialBlocks);
 
     return (
         <>
@@ -19,6 +19,7 @@ const BlockList = ({ blocks: initialBlocks }) => {
                         onContentChange={content => {
                             modifyBlockContent(index, content);
                         }} 
+                        onTypeChange={type => modifyBlockType(index, type)}
                         onKeyEnter={(content, type) => {
                             saveBlock(index, content, type);
                             if (index + 1 === blocks.size) {
