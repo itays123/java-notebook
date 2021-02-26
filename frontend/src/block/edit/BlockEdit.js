@@ -20,7 +20,7 @@ const BlockEdit = ({ type: initialType, content: initialContent, onContentChange
                     setContent(e.target.value);
                     onContentChange(e.target.value);
                 }}
-                onKeyPress={e => e.key === 'Enter' && onKeyEnter()} 
+                onKeyPress={e => e.key === 'Enter' && onKeyEnter(content, type)} 
                 onBlur={() => {
                     onBlur(content, type);
                 }}

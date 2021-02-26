@@ -17,7 +17,8 @@ const BlockList = ({ blocks: initialBlocks }) => {
                         onContentChange={content => {
                             modifyBlockContent(index, content);
                         }} 
-                        onKeyEnter={() => {
+                        onKeyEnter={(content, type) => {
+                            saveBlock(index, content, type);
                             if (index + 1 === blocks.size) {
                                 addBlock();
                             }
