@@ -2,6 +2,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import AuthContextProvider from "./auth/AuthContext";
 import Login from "./auth/login/Login";
 import Register from "./auth/register/Register";
+import CreateNote from "./note/create/CreateNote";
 import NoteView from "./note/view/NoteView";
 import Home from "./shared/Home";
 import NavigationWrapper from "./shared/Navigation/NavigationWrapper";
@@ -26,6 +27,9 @@ function App() {
       </Route>
       <Route path="/note/:id">
         <NoteView />
+      </Route>
+      <Route path="/create">
+        <CreateNote />
       </Route>
     </NavigationWrapper>
     </AuthContextProvider>
