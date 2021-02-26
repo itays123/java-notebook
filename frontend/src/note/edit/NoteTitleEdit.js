@@ -15,7 +15,7 @@ const NoteTitleEdit = () => {
             value={title}
             ref={ref}
             onChange={e => setTitle(e.target.value)}
-            className="pt-2 pb-1 my-0 text-5xl font-bold text-gray-800 focus:outline-none leading-snug"
+            className="pt-2 pb-1 my-0 text-5xl font-bold text-gray-800 focus:outline-none leading-snug flex-grow"
             placeholder="Untitled Note"
             onKeyPress={e => e.key === 'Enter' && next()}
         />

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useBlockEditor } from "../../block/edit/useBlockEditor";
 
 const NoteEditorContext = createContext();
@@ -9,6 +10,7 @@ export function useNoteEditorContext() {
 
 const NoteEditorContextProvider = ( {children, initialTitle, initialBlocks} ) => {
     const [focusedBlockIndex, setFocusedBlockIndex] = useState(-1);
+    const { push } = useHistory();
     const [title, setTitle] = useState(initialTitle);
     const blockEditor = useBlockEditor(initialBlocks);
 
@@ -16,15 +18,25 @@ const NoteEditorContextProvider = ( {children, initialTitle, initialBlocks} ) =>
         <NoteEditorContext.Provider value={{
             focusedBlockIndex,
             setFocusedBlockIndex,
-            title,
-            setTitle,
-            ...blockEditor,
             next() {
                 setFocusedBlockIndex(i=>++i);
             },
             prev() {
                 setFocusedBlockIndex(i=>--i);
-            }
+            },
+            title,
+            setTitle,
+            ...blockEditor,
+            isChanged() {
+                return title !== initialTitle
+                    || blockEditor.added.size > 0
+                    || blockEditor.modified.size > 0
+                    || blockEditor.deleted.size > 0
+            },
+            deleteNote() {
+                push('/')
+            },
+            saveNote() {}
         }}>
             {children}
         </NoteEditorContext.Provider>
