@@ -20,7 +20,7 @@ const NoteView = () => {
         deleteNote={deleteNote}
         >
           <div className="note scrollable">
-              <div className="container mx-auto">
+              <div className="container mx-auto px-2 md:px-0">
                 <header className="pt-8 pb-2">
                   <NoteTitle />
                   <h2 className="text-xl font-bold text-gray-600 mt-2">By {note.user.name}</h2>

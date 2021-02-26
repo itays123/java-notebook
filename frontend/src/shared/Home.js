@@ -5,7 +5,7 @@ const Home = () => {
     const { user } = useAuthContext();
     return ( 
         <div className="home scrollable">
-            <div className="container mx-auto pt-8">
+            <div className="container mx-auto pt-8 px-4 md:px-0">
                 <header className="font-bold text-5xl text-gray-800">{user.name}'s Insights</header>
                 <main>
                     <NoteList notes={user.notes} />

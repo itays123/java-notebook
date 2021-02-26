@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const Welcome = () => {
     return ( 
-        <div className="welcome container mx-auto h-full">
+        <div className="welcome container mx-auto h-full px-4 md:px-0">
             <header className="mt-12">
                 <h1 className="text-5xl font-bold text-cream-darker">Java Notebook</h1>
                 <h2 className="mt-2 text-3xl font-bold text-cream-dark">A Place to Keep Your Insights!</h2>
