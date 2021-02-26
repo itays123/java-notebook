@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function asMap(blocks = []) {
   const map = new Map();
@@ -20,8 +20,10 @@ export function useBlockEditor(initialBlocks = []) {
 
   return {
     blocks,
+    added,
+    modified,
+    deleted,
     saveBlock(index, updatedContent, updatedType) {
-      console.log('saving', index);
       const block = blocks.get(index);
       if (block) updateMap(index, { ...block, content: updatedContent, type: updatedType });
     },

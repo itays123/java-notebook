@@ -9,7 +9,7 @@ const NoteView = () => {
     const note = useNote(id);
 
     return ( 
-      <NoteEditorContextProvider initialTitle={note.title}>
+      <NoteEditorContextProvider initialTitle={note.title} initialBlocks={note.content}>
         <div className="note scrollable">
             <div className="container mx-auto">
               <header className="pt-8 pb-2">
@@ -17,7 +17,7 @@ const NoteView = () => {
                 <h2 className="text-xl font-bold text-gray-600 mt-2">By {note.user.name}</h2>
               </header>
               <main>
-                <BlockList blocks={note.content} />
+                <BlockList />
               </main>
             </div>
         </div>

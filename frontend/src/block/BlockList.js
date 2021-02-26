@@ -1,12 +1,10 @@
 import { Fragment } from "react";
 import { useNoteEditorContext } from "../note/edit/NoteEditorContext";
 import BlockEdit from "./edit/BlockEdit";
-import { useBlockEditor } from "./edit/useBlockEditor";
 import Block from "./view/Block";
 
-const BlockList = ({ blocks: initialBlocks }) => {
-    const {focusedBlockIndex, setFocusedBlockIndex, next, prev} = useNoteEditorContext();
-    const { blocks, modifyBlockContent, modifyBlockType, addBlock, saveBlock, deleteBlock } = useBlockEditor(initialBlocks);
+const BlockList = () => {
+    const {focusedBlockIndex, setFocusedBlockIndex, next, prev, blocks, modifyBlockContent, modifyBlockType, addBlock, saveBlock, deleteBlock} = useNoteEditorContext();
 
     return (
         <>
