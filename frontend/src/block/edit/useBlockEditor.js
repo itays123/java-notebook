@@ -12,12 +12,11 @@ export function useBlockEditor(initialBlocks = []) {
   const [blocks, setBlocks] = useState(asMap(initialBlocks));
   const [modified, setModified] = useState(new Map());
   const [added, setAdded] = useState(new Map());
+  const [deleted, setDeleted] = useState(new Set());
 
   const updateMap = (k,v) => {
     setBlocks(map => new Map(map.set(k,v)));
   }
-
-  useEffect(() => { console.log(blocks) }, [blocks]);
 
   return {
     blocks,
@@ -45,20 +44,23 @@ export function useBlockEditor(initialBlocks = []) {
         })
       }
     },
-    modifyBlockType(index, type) {
-        // if existed
-        /*
-        let modifiedBlockId = blocks[index].id;
-        if (modifiedBlockId) {
-            setModifiedMap(map => {
-                let block = blocks[index];
-                return new Map(map.set(modifiedBlockId, { ...block ,type }))
-            })
-        }
-        */
-      },
     deleteBlock(index) {
       // if existed, initial index
+      const block = blocks.get(index);
+      if (block.id) {
+        setModified(m => {
+          let map = new Map(m);
+          map.delete(block.id);
+          return map;
+        })
+        setDeleted(s => new Set(s.add(block.id)))
+      } else if (block) {
+        setAdded(m => {
+          let map = new Map(m);
+          map.delete(index);
+          return map;
+        })
+      }
       setBlocks(m => {
         let map = new Map(m);
         map.delete(index);

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const BlockEdit = ({ type: initialType, content: initialContent, onContentChange, onKeyEnter, onBlur }) => {
+const BlockEdit = ({ type: initialType, content: initialContent, onContentChange, onKeyEnter, onBlur, onEmptyDelete }) => {
     const [content, setContent] = useState(initialContent || '');
     const [type, setType] = useState(initialType || 'P');
     const ref = useRef();
@@ -21,6 +21,11 @@ const BlockEdit = ({ type: initialType, content: initialContent, onContentChange
                     onContentChange(e.target.value);
                 }}
                 onKeyPress={e => e.key === 'Enter' && onKeyEnter(content, type)} 
+                onKeyUp={e => {
+                    if (content === '') {
+                        if (e.key === 'Backspace' || e.key === 'Delete') onEmptyDelete(e.key === 'Backspace');
+                    }
+                }}
                 onBlur={() => {
                     onBlur(content, type);
                 }}

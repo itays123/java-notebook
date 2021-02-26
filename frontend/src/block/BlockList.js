@@ -5,8 +5,8 @@ import { useBlockEditor } from "./edit/useBlockEditor";
 import Block from "./view/Block";
 
 const BlockList = ({ blocks: initialBlocks }) => {
-    const {focusedBlockIndex, setFocusedBlockIndex, next} = useNoteEditorContext();
-    const { blocks, modifyBlockContent, addBlock, saveBlock } = useBlockEditor(initialBlocks);
+    const {focusedBlockIndex, setFocusedBlockIndex, next, prev} = useNoteEditorContext();
+    const { blocks, modifyBlockContent, addBlock, saveBlock, deleteBlock } = useBlockEditor(initialBlocks);
 
     return (
         <>
@@ -23,6 +23,10 @@ const BlockList = ({ blocks: initialBlocks }) => {
                                 addBlock();
                             }
                             next();
+                        }}
+                        onEmptyDelete={(isBackspace) => {
+                            deleteBlock(index);
+                            return isBackspace ? prev() : next();
                         }}
                         onBlur={(content, type) => {
                             saveBlock(index, content, type);

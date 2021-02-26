@@ -7,13 +7,16 @@ export function useNoteEditorContext() {
 }
 
 const NoteEditorContextProvider = ( {children} ) => {
-    const [focusedBlockIndex, setFocusedBlockIndex] = useState();
+    const [focusedBlockIndex, setFocusedBlockIndex] = useState(-1);
     return ( 
         <NoteEditorContext.Provider value={{
             focusedBlockIndex,
             setFocusedBlockIndex,
             next() {
                 setFocusedBlockIndex(i=>++i);
+            },
+            prev() {
+                setFocusedBlockIndex(i=>--i);
             }
         }}>
             {children}
