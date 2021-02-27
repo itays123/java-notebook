@@ -37,6 +37,7 @@ public class UserController {
         Cookie tokenCookie = new Cookie("token", token);
         tokenCookie.setHttpOnly(true);
         tokenCookie.setPath("/");
+        tokenCookie.setDomain("localhost");
         response.addCookie(tokenCookie);
         return token;
     }
@@ -47,6 +48,7 @@ public class UserController {
         Cookie tokenCookie = new Cookie("token", token);
         tokenCookie.setHttpOnly(true);
         tokenCookie.setPath("/");
+        tokenCookie.setDomain("localhost");
         response.addCookie(tokenCookie);
         return token;
     }
