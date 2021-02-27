@@ -1,5 +1,6 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import AuthContextProvider from "./auth/AuthContext";
+import AuthOnly from "./auth/AuthOnly";
 import Login from "./auth/login/Login";
 import Register from "./auth/register/Register";
 import CreateNote from "./note/create/CreateNote";
@@ -14,22 +15,34 @@ function App() {
     <AuthContextProvider>
     <NavigationWrapper>
       <Route exact path="/">
-        <Home />
+        <AuthOnly redirect="/welcome">
+          <Home />
+        </AuthOnly>
       </Route>
       <Route path="/welcome">
-        <Welcome />
+        <AuthOnly shouldBeAuthenticated={false} redirect="/">
+          <Welcome />
+        </AuthOnly>
       </Route>
       <Route path="/login">
-        <Login />
+        <AuthOnly shouldBeAuthenticated={false} redirect="/">
+          <Login />
+        </AuthOnly>
       </Route>
       <Route path="/register">
-        <Register />
+        <AuthOnly shouldBeAuthenticated={false} redirect="/">
+          <Register />
+          </AuthOnly>
       </Route>
       <Route path="/note/:id">
-        <NoteView />
+        <AuthOnly redirect="/welcome">
+          <NoteView />
+        </AuthOnly>
       </Route>
       <Route path="/create">
-        <CreateNote />
+        <AuthOnly redirect="/welcome">
+          <CreateNote />
+        </AuthOnly>
       </Route>
     </NavigationWrapper>
     </AuthContextProvider>
