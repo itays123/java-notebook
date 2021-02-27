@@ -52,4 +52,14 @@ public class UserController {
         response.addCookie(tokenCookie);
         return token;
     }
+
+    @DeleteMapping
+    public void logout(HttpServletResponse response) {
+        Cookie tokenCookie = new Cookie("token", null);
+        tokenCookie.setHttpOnly(true);
+        tokenCookie.setPath("/");
+        tokenCookie.setDomain("localhost");
+        tokenCookie.setMaxAge(0);
+        response.addCookie(tokenCookie);
+    }
 }
