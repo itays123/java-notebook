@@ -1,6 +1,9 @@
+import { useFetch } from "../../shared/http/useFetch"
+
 export function useCreateNote() {
+    const { doFetch } = useFetch('/api/note', 'POST', false);
     return updateable => {
-        console.log({
+        doFetch({
             title: updateable.title,
             content: updateable.addedBlocks
         })

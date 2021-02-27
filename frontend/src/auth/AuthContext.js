@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { useFetch } from "../shared/http/useFetch";
 
 const AuthContext = createContext();
 
@@ -7,25 +8,18 @@ export function useAuthContext() {
 }
 
 const AuthContextProvider = ({ children }) => {
-    const dummyData = {
-        isAuth: true,
-        user: {
-            name: 'Itay',
-            notes: [
-                { title: 'My First Note', id: 1 },
-                { title: 'Another Note', id: 2 },
-                { title: 'Another Note #2', id: 3 },
-                { title: 'Another Note #3', id: 4 },
-                { title: 'Untitled Note', id: 5 },
-                { title: 'ahjfnfjff', id: 6 },
-                { title: 'A Secret Note', id: 7 },
-            ]
-        },
-        refresh() {},
-        logout() {}
-    }
+    const { data, isLoading, status, doFetch } = useFetch('/api/auth');
+
     return ( 
-        <AuthContext.Provider value={dummyData}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{
+            user: data,
+            isAuth: status === 200,
+            refresh() { doFetch() },
+            isLoading,
+            logout() {}
+        }}>
+            {children}
+        </AuthContext.Provider>
      );
 }
  

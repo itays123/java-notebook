@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-const SERVER_PATH = 'http://localhost:8080';
 /**
  * 
  * @param {string} path 
@@ -17,19 +16,21 @@ export function useFetch(path, method = 'GET',fetchOnMount = true, isJson = true
             reqInit.headers = { 'Content-Type': 'application/json' };
         }
         setLoading(true);
-        const response = await fetch(SERVER_PATH + path, reqInit);
+        const response = await fetch(path, reqInit);
         setLoading(false);
         setStatus(response.status);
         if (isJson) setData(await response.json());
+        return response;
     }
 
     useEffect(() => {
         if (fetchOnMount) {
             const fetchEffect = async () => {
-                const response = await fetch(SERVER_PATH + path);
-                setLoading(false);
+                const response = await fetch(path);
+                const data = await response.json();
                 setStatus(response.status);
-                setData(await response.json());
+                setData(data);
+                setLoading(false);
             }
             fetchEffect();
         }

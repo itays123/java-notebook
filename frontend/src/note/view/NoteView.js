@@ -12,24 +12,26 @@ const NoteView = () => {
     const saveNote = useSaveNote(id);
     const deleteNote = useDeleteNote(id);
 
-    return ( 
+    console.log(note);
+
+    return note.isLoading ? null : ( 
       <NoteEditorContextProvider 
         initialTitle={note.title} 
         initialBlocks={note.content} 
         saveNote={saveNote}
         deleteNote={deleteNote}
         >
-          <div className="note scrollable">
-              <div className="container mx-auto px-2 md:px-0">
-                <header className="pt-8 pb-2">
-                  <NoteTitle />
-                  <h2 className="text-xl font-bold text-gray-600 mt-2">By {note.user.name}</h2>
-                </header>
-                <main>
-                  <BlockList />
-                </main>
-              </div>
-          </div>
+            <div className="note scrollable">
+                <div className="container mx-auto px-2 md:px-0">
+                  <header className="pt-8 pb-2">
+                    <NoteTitle />
+                    <h2 className="text-xl font-bold text-gray-600 mt-2">By {note.user?.name}</h2>
+                  </header>
+                  <main>
+                    <BlockList />
+                  </main>
+                </div>
+            </div>
         </NoteEditorContextProvider>
      );
 }
