@@ -1,6 +1,8 @@
 package com.itays123.javanotebook.user;
 
-// the user returned when asking for individual note, excluding the email and password fields
+/**
+ * the user returned when asking for individual note, excluding the email and password fields
+ */
 public class SecureUser {
 
     private Long id;

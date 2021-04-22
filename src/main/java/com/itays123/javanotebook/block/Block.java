@@ -2,6 +2,9 @@ package com.itays123.javanotebook.block;
 
 import javax.persistence.*;
 
+/**
+ * The Block Entity
+ */
 @Entity
 @Table(name="blocks")
 public class Block {

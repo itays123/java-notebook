@@ -4,6 +4,9 @@ import com.itays123.javanotebook.note.NoteTitleAndId;
 
 import java.util.List;
 
+/**
+ * The object returned to the user, containing note titles and ids only.
+ */
 public class UserProfile {
 
     private Long id;

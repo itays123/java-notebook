@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Note entity
+ */
 @Entity
 @Table(name="notes")
 public class Note {

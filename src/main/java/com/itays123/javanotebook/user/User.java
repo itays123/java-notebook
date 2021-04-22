@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The user entity
+ */
 @Entity
 @Table(name = "users")
 public class User {

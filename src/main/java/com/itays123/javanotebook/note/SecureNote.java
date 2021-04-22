@@ -5,7 +5,9 @@ import com.itays123.javanotebook.user.SecureUser;
 
 import java.util.List;
 
-// The note returned when asking for an individual note, returning secured user;
+/**
+ * The note returned when asking for an individual note, returning secured user;
+ */
 public class SecureNote {
 
     private Long id;

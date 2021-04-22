@@ -11,6 +11,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Handles user-related requests
+ */
 @RestController
 @RequestMapping(path = "api/auth")
 public class UserController {
@@ -25,12 +28,25 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Returns user data
+     * @param request the request data
+     * @return the requester profile
+     */
     @GetMapping
     public UserProfile getProfile(HttpServletRequest request) {
         log.info("Handling profile request with {}", request.getUserPrincipal().getName());
         return userService.getProfile(request.getUserPrincipal().getName());
     }
 
+    /**
+     * Commits a login action
+     * @param user the auth credentials
+     * @param response the response object
+     * @throws EmailNotFoundException if email is not in use
+     * @throws PasswordIncorrectException if password doesn't match
+     * @return the authentication token if login successful
+     */
     @PostMapping(path = "/login")
     public String login(@RequestBody User user, HttpServletResponse response) {
         String token = userService.login(user.getEmail(), user.getPassword());
@@ -42,6 +58,13 @@ public class UserController {
         return token;
     }
 
+    /**
+     * Commits a register action
+     * @param user the user to register
+     * @param response the response object
+     * @throws EmailInUseException if email is already in use
+     * @return the authentication token
+     */
     @PostMapping(path = "/register")
     public String register(@RequestBody User user, HttpServletResponse response) {
         String token = userService.register(user.getName(), user.getEmail(), user.getPassword());
@@ -53,6 +76,10 @@ public class UserController {
         return token;
     }
 
+    /**
+     * Deletes the auth cookie from the session
+     * @param response the response object.
+     */
     @DeleteMapping
     public void logout(HttpServletResponse response) {
         Cookie tokenCookie = new Cookie("token", null);

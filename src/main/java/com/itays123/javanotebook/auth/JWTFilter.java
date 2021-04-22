@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * A JWT Filter for getting cookies
+ */
 @Component
 public class JWTFilter extends BasicAuthenticationFilter {
 
